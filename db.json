@@ -1,0 +1,32 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Shogun",
+      "author": "James Clavell",
+      "ISBN": "0440178002",
+      "read": true
+    },
+    {
+      "id": 2,
+      "title": "Yearbook",
+      "author": "Seth Rogan",
+      "ISBN": "1984825402",
+      "read": false
+    },
+    {
+      "id": 3,
+      "title": "A Man Called Ove",
+      "author": "Fredrik Backman",
+      "ISBN": "1476738017",
+      "read": true
+    },
+    {
+      "title": "Noble House",
+      "author": "James Clavell",
+      "ISBN": "0440164842",
+      "id": 4,
+      "read": false
+    }
+  ]
+}

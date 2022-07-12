@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
+import Book from "./components/Book"
+import BookForm from './components/BookForm'
+import bookService from './services/books'
 
-function App() {
+const App = () => {
+  const [books, setBooks] = useState([])
+
+  useEffect(() => {
+    bookService
+      .getAll()
+      .then(initialBooks => {setBooks(initialBooks)})
+    }, [])
+
+  const addBook = (bookObject) => {
+    bookService
+      .create(bookObject)
+      .then(returnedBook => {
+        console.log(returnedBook)
+        setBooks(books.concat(returnedBook))
+      })
+  }
+
+  const toggleReadOf = id => {
+    const book = books.find(b => b.id === id)
+    const changedBook = {...book, read: !book.read }
+
+    bookService
+      .update(id, changedBook)
+      .then(returnedBook => {
+        setBooks(books.map(book => book.id !== id ? book : returnedBook))
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Books</h1>
+      <div>
+        {books.map(book =>
+            <Book key={book.id} book={book} toggleRead={() => toggleReadOf(book.id)} />
+        )}
+      </div>
+      <BookForm createBook={addBook}/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
